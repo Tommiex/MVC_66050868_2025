@@ -7,11 +7,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Repair window that allows the user to repair a superhero suit
 public class RepairWindow extends JFrame {
-    private JTextArea suitDetails;
-    private JButton btnRepair;
-    private Manage manage;
-    private int suitId;
+    private JTextArea suitDetails; // Area to display the details of the suit
+    private JButton btnRepair; // Button to trigger the repair of the suit
+    private Manage manage; // Controller object to manage the repair process
+    private int suitId; // ID of the suit being repaired
 
     public RepairWindow(Manage manage, int suitId) {
         this.manage = manage;
@@ -33,18 +34,23 @@ public class RepairWindow extends JFrame {
         add(scrollPane);
         add(btnRepair);
 
-        // Button 
-        btnRepair.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manage.repairSuit(suitId);
-                suitDetails.setText(manage.getSuitById(suitId).toString());
-                manage.refreshDatabaseView();
-                if(manage.getSuitById(suitId).getDurability() == 100){
-                    btnRepair.setEnabled(false);
-                }
+       // Add action listener to the "Repair Suit" button
+       btnRepair.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Call the repair method in the manage object
+            manage.repairSuit(suitId);
+            // Update the suit details after repair
+            suitDetails.setText(manage.getSuitById(suitId).toString());
+            // Refresh the database view to reflect the changes
+            manage.refreshDatabaseView();
+
+            // If the durability reaches 100, disable the repair button
+            if (manage.getSuitById(suitId).getDurability() == 100) {
+                btnRepair.setEnabled(false); // Disable the repair button if the suit is fully repaired
             }
-        });
+        }
+    });
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 250);

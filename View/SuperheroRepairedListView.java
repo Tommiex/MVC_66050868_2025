@@ -12,42 +12,37 @@ import java.util.ArrayList;
 public class SuperheroRepairedListView extends JFrame {
     private JTextArea outputArea;
     private Manage manage;
-    private JButton refreshButton;
+
 
     public SuperheroRepairedListView(Manage manage) {
-        this.manage = manage;
-        manage.superheroRepairedListView = this;
+        this.manage = manage; // Initialize Manager 
+        manage.superheroRepairedListView = this; // Assign this view to the manage object
         setTitle("Superhero Suit Database");
+        
+        outputArea = new JTextArea(20, 40); // Place to show all repaired suit
+        outputArea.setEditable(false); // Make this area non-editable
+        JScrollPane scrollPane = new JScrollPane(outputArea); // Add scroll to move
 
-        outputArea = new JTextArea(20, 40);
-        outputArea.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(outputArea);
-        refreshButton = new JButton("Refresh Stock");
         setLayout(new FlowLayout());
 
         add(new JLabel("Superhero Suits List:"));
-        add(refreshButton, BorderLayout.SOUTH);
         add(scrollPane);
 
         // Load all repaired suits when window opens
         displayAllRepairedSuits();
-        refreshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                refreshRepairedListView();
-            }
-        });
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         setSize(600, 400);
         setVisible(true);
     }
-
+    //display all suit in database 
     private void displayAllRepairedSuits() {
         String allSuits = manage.getAllRepairedSuits();
         outputArea.setText(allSuits);
     }
+    // Function used to get the updated suit and display it
     public void refreshRepairedListView(){
-        outputArea.setText("");
-        displayAllRepairedSuits();
+        outputArea.setText(""); // Clear the output area
+        displayAllRepairedSuits();// Reload the list of all repaired suits
     }
 }
